@@ -1,0 +1,76 @@
+<html>
+<body>
+    <canvas id= "canvas"></canvas>
+    <script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    canvas.height= 505
+    canvas.width= 505
+    var h = canvas.height
+    var w = canvas.width
+    ctx.fillRect(0,0,500,5);
+    ctx.fillRect(0,0,5,500);
+    ctx.fillRect(0,500,500,5);
+    ctx.fillRect(500,0,5,500);
+
+function random(max) {
+    return Math.floor(Math.random()*max)
+};
+
+var beginningX = 50
+var beginningY = 400
+
+var theta = random(30)+40
+
+var velocityX = 1*Math.abs(Math.cos(theta))
+var velocityY = 2*Math.abs(Math.sin(theta))
+
+var gravity = .005
+
+function gravityY(){
+    velocityY-=gravity
+}
+
+class ball {
+        constructor(x, y) {
+            this.x = x
+            this.y = x
+        };
+    draw(x, y) {
+        ctx.fillRect(x, y, 50, 50);
+        console.log(x, y)
+        }
+    moveUp(){
+        ctx.clearRect(beginningX, beginningY, 50, 50)
+        beginningY-=velocityY;
+    }
+    moveDown(){
+        ctx.clearRect(beginningX, beginningY, 50, 50) 
+        beginningY+=velocityY   
+    }
+    moveRight(){
+        ctx.clearRect(beginningX, beginningY, 50, 50)
+        beginningX+=velocityX
+    }
+    moveLeft(){
+        ctx.clearRect(beginningX, beginningY, 50, 50)
+        beginningX-=velocityX
+    }
+}
+
+var volleyBall = new ball
+function gameLoop() {
+    volleyBall.moveRight()
+    volleyBall.moveUp()
+    volleyBall.draw(beginningX, beginningY)
+
+    gravityY()
+    if (beginningY > 450){
+        return
+    }
+    setTimeout(gameLoop, 10)
+}
+gameLoop() 
+</script>
+</body>
+</html>
